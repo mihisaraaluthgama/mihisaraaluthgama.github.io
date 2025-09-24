@@ -1,10 +1,329 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <title>My Portfolio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Yasith Aluthgama — Biotechnology Portfolio</title>
+
+  <!-- Google fonts (optional) -->
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --accent:#2f4f68;        /* dark blue */
+      --muted:#6f7f8a;
+      --bg:#f7f9fb;
+      --paper:#ffffff;
+      --sidebar:#445c70;
+      --max-width:1100px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:#222;
+      background:linear-gradient(180deg,#f1f5f9 0%,var(--bg) 100%);
+      padding:32px 16px;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .wrap{
+      max-width:var(--max-width);
+      margin:0 auto;
+      background:var(--paper);
+      border:6px solid var(--accent);
+      display:grid;
+      grid-template-columns:320px 1fr;
+      gap:0;
+      min-height:720px;
+    }
+
+    /* Sidebar */
+    .sidebar{
+      background:linear-gradient(180deg,var(--sidebar), #3e5565);
+      color: #fff;
+      padding:34px 28px;
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
+    .photo{
+      width:100%;
+      aspect-ratio:1/1;
+      border-radius:6px;
+      overflow:hidden;
+      background:#ddd;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:4px solid rgba(255,255,255,0.08);
+    }
+    .photo img{width:100%; height:100%; object-fit:cover; display:block}
+
+    .contact, .skills, .tech{
+      background: rgba(255,255,255,0.03);
+      padding:12px 14px;
+      border-radius:6px;
+      font-size:14px;
+      line-height:1.4;
+    }
+    .section-title{
+      font-weight:700;
+      margin:0 0 8px 0;
+      color: #e9f1f6;
+      letter-spacing:0.6px;
+    }
+    .contact a{ color:#d8eaf6; text-decoration:underline; word-break:break-word }
+    .list{ margin:8px 0 0 0; padding-left:16px }
+    .list li{ margin-bottom:6px; list-style:disc; color:#eef6fb; opacity:0.95; font-size:14px }
+
+    footer.sidebar-foot{
+      margin-top:auto;
+      font-size:12px;
+      color:rgba(255,255,255,0.7);
+    }
+
+    /* Main */
+    .main{
+      padding:42px 48px;
+      position:relative;
+    }
+    .name{
+      display:flex;
+      gap:18px;
+      align-items:flex-end;
+      margin-bottom:6px;
+    }
+    .name h1{
+      margin:0;
+      font-family:"Merriweather", serif;
+      font-weight:700;
+      font-size:44px;
+      letter-spacing:4px;
+      color:var(--accent);
+    }
+    .name h2{
+      margin:0;
+      font-size:28px;
+      font-weight:300;
+      color:var(--muted);
+      letter-spacing:3px;
+    }
+
+    .hr{
+      height:2px;
+      background:linear-gradient(90deg,var(--accent), transparent);
+      width:80%;
+      margin:12px 0 22px;
+      border-radius:2px;
+    }
+
+    .headline{
+      font-weight:700;
+      letter-spacing:1px;
+      color:#222;
+      margin-bottom:10px;
+      font-size:18px;
+    }
+
+    .objective{
+      color:#333;
+      line-height:1.6;
+      margin-bottom:18px;
+      font-size:15px;
+    }
+
+    .card{
+      margin-bottom:20px;
+    }
+
+    .subsection h3{
+      margin:0 0 8px 0;
+      font-size:16px;
+      color:var(--accent);
+      text-decoration:underline;
+      display:inline-block;
+    }
+
+    .education ul, .achievements ul, .intern ul{
+      padding-left:18px;
+      margin-top:8px;
+    }
+    .education li, .achievements li, .intern li{
+      margin-bottom:8px;
+      font-size:14px;
+      color:#222;
+    }
+
+    /* Projects / Gallery thumbnails */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:12px;
+      margin-top:10px;
+    }
+    .thumb{
+      background:#eef5f8;
+      padding:8px;
+      border-radius:6px;
+      min-height:120px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
+
+    /* Contact details area */
+    .contact-me{
+      margin-top:12px;
+      padding:12px;
+      border-radius:6px;
+      background:linear-gradient(90deg, rgba(47,79,104,0.06), rgba(47,79,104,0.02));
+    }
+    .btn{
+      display:inline-block;
+      padding:10px 14px;
+      border-radius:6px;
+      background:var(--accent);
+      color:#fff;
+      text-decoration:none;
+      font-weight:600;
+      margin-top:8px;
+    }
+
+    /* Responsive */
+    @media (max-width:900px){
+      .wrap{ grid-template-columns:1fr; }
+      .sidebar{ order:2; padding:20px; }
+      .main{ order:1; padding:20px }
+      .name h1{ font-size:34px }
+      .name h2{ font-size:20px }
+    }
+
+    /* small print notes */
+    .note{ font-size:13px; color:var(--muted); margin-top:6px }
+  </style>
 </head>
 <body>
-  <h1>Hi, I'm YOUR NAME 👋</h1>
-  <p>My portfolio website is coming soon!</p>
+
+  <div class="wrap" role="main">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar" aria-label="Sidebar with contact and skills">
+      <div class="photo" title="Profile photo">
+        <!-- Replace the path below with your own image file -->
+        <img src="photo.jpg" alt="Yasith Aluthgama — profile photo">
+      </div>
+
+      <div class="contact">
+        <div class="section-title">Contact</div>
+        <div style="font-size:14px; margin-top:8px;">
+          <div><strong>Phone:</strong> <a href="tel:+94701319533">+94 701319533</a></div>
+          <div><strong>Email:</strong> <a href="mailto:aluthgamayasith@gmail.com">aluthgamayasith@gmail.com</a></div>
+          <div style="margin-top:6px"><strong>Address:</strong> 58/b, Meepitiya, Kegalle</div>
+        </div>
+      </div>
+
+      <div class="skills">
+        <div class="section-title">Soft Skills</div>
+        <ul class="list">
+          <li>Teamwork & Collaboration</li>
+          <li>Scientific Communication</li>
+          <li>Time Management</li>
+          <li>Attention to Detail</li>
+          <li>Critical Thinking</li>
+        </ul>
+      </div>
+
+      <div class="tech">
+        <div class="section-title">Technical Skills</div>
+        <ul class="list">
+          <li>PCR, Gel Electrophoresis</li>
+          <li>ELISA, Spectrophotometry</li>
+          <li>Aseptic Techniques & Microbial Culture</li>
+          <li>DNA / RNA Extraction</li>
+          <li>Use of analytical lab instruments</li>
+        </ul>
+      </div>
+
+      <footer class="sidebar-foot">
+        <div style="font-weight:600; margin-bottom:6px">Availability</div>
+        <div class="note">Open to internships and entry-level roles in agricultural biotechnology and lab research.</div>
+      </footer>
+    </aside>
+
+    <!-- RIGHT MAIN -->
+    <main class="main">
+      <header class="name" aria-label="Name and title">
+        <div>
+          <h1>YASITH</h1>
+        </div>
+        <div style="flex:1">
+          <h1><b>ALUTHGAMA</b></h1>
+          <div class="hr" aria-hidden="true"></div>
+        </div>
+      </header>
+
+      <div class="headline">BIOTECHNOLOGY GRADUATE</div>
+
+      <section class="card objective" aria-labelledby="obj">
+        <h3 id="obj" style="margin:0 0 8px 0; font-size:15px; color:var(--accent);">Objective</h3>
+        <p><h4>
+          A passionate and motivated BSc Biotechnology graduate seeking an entry-level position to apply laboratory skills, scientific knowledge, and research experience in a dynamic research or industrial environment — with a keen interest in molecular biology, genetics, and applied biotechnology.</h4>
+        </p>
+      </section>
+
+      <section class="card intern" aria-labelledby="intern">
+        <h3 id="intern" class="subsection"><h3 style="display:inline-block; margin:0; color:var(--accent); text-decoration:underline;">Internship</h3></h3>
+        <ul>
+          <li><strong>Agriculture Scientist Assistant</strong> — Hayleys Company Pvt Ltd</li>
+          <li>Responsibilities: Supported lab & field tasks, sample collection, basic assays, data recording and reporting.</li>
+          <li>Key learnings: Practical exposure to agricultural biotech applications, teamwork and lab safety procedures.</li>
+        </ul>
+      </section>
+
+      <section class="card education" aria-labelledby="edu">
+        <h3 id="edu" class="subsection">EDUCATION</h3>
+
+        <ul>
+          <li>
+            <strong>BSc (Hons) in Biotechnology — SLIIT</strong><br>
+            <span class="note">Key modules: Molecular Biology, Genetic Engineering, Microbiology, Bioprocess Engineering, Analytical Chemistry.</span>
+          </li> 
+			<ul>
+				<li>molecular biology </li>
+
+          <li style="margin-top:8px">
+            <strong>Diploma in Information Technology — ESOFT</strong><br>
+            <span class="note">MS Office, Programming fundamentals, Database Management, Networking basics — gained IT literacy and software tools experience.</span>
+          </li>
+
+          <li style="margin-top:8px">
+            <strong>Advanced Level — Biological Science</strong><br>
+            <span class="note">Pinnawala Central College</span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="card" aria-labelledby="projects">
+       
+      </section>
+
+      <section class="card achievements" aria-labelledby="acts">
+        <h3 id="acts" class="subsection">Activities & Achievements</h3>
+        <ul>
+          <li>Member, Science Society</li>
+          <li>Presented at college/faculty-level Biotechnology Symposium</li>
+          <li>Volunteered for campus clean-up drive</li>
+        </ul>
+      </section>
+
+     
+    </main>
+  </div>
+
 </body>
 </html>
